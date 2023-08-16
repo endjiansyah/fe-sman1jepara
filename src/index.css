@@ -1,0 +1,283 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities{
+  .content-auto {
+      content-visibility: auto;
+  }
+  body{
+      font-family:'Inter';
+  }
+  
+}
+@layer components {
+
+  .container{
+      @apply px-5
+  }
+
+  body{
+      @apply w-full
+  }
+
+  #header input{
+      @apply font-inter
+  }
+
+  .blueh4{
+      @apply text-primary font-medium text-lg leading-[18px] mb-[10px] font-inter
+  }
+
+  .title-hero{
+      @apply font-bold text-3xl lg:text-[56px] lg:leading-[66px] text-title font-inter
+  }
+  .title-a { /* text 36px line height 48px #0a093d*/
+      @apply text-2xl font-bold lg:leading-[48px] font-inter text-title font-inter
+      
+      /* desktop */
+      lg:text-4xl
+  }
+  .title-b { /* text 36px line height 36px #0a093d*/
+      @apply text-2xl font-bold lg:leading-9 font-inter text-title text-center
+
+      /* desktop */
+      lg:text-4xl 
+  }
+
+  .title-c{
+      @apply font-semibold text-xl leading-[26px] text-[#2f2c4a] font-inter
+  }
+  .title-d{
+      @apply font-semibold text-3xl leading-[52px] text-[#2f2c4a] font-inter
+  }
+  
+  .par-a { /* text 16px line height 28px #656564 */
+      @apply text-base font-normal leading-7 font-inter text-secondary font-inter
+  }
+
+  .par-b{
+      @apply text-base font-normal leading-[26px] text-[#8C8C8C] font-inter
+  }
+  .par-c{
+      @apply text-base font-normal leading-[16px] text-secondary font-inter
+  }
+
+  .btn{
+      @apply 
+      /* hover */
+      hover:bg-blue-700 hover:text-white
+  }
+
+  /* ---------------------- */
+  #header{
+      @apply border-b-[1px]  fixed w-full top-0 bg-white/90 backdrop-blur z-20
+  }
+
+  #header .container{
+      @apply px-5 flex justify-between flex-wrap lg:flex-nowrap items-center lg:gap-[70px] gap-5 pt-[15px] pb-[12px]
+  }
+
+  #header .container img{
+      @apply h-12 lg:h-auto
+  }
+
+  .hamburger{
+      @apply inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600
+  }
+
+  #header .hidenisasi{
+      @apply flex justify-between flex-col gap-5 items-center
+
+      /* > MD */
+      md:flex-row md:gap-0
+  }
+
+  #header .menu-navigation{
+      @apply flex items-center
+  }
+
+  #header .menu-navigation li.dropdown{
+      @apply flex gap-[5px] items-center
+  }
+
+  #header .menu-navigation li a{
+      @apply font-inter text-secondary
+  }
+
+  #header .menu-navigation ul{
+      @apply flex gap-8 flex-col   text-center justify-center
+
+      /* > MD */
+      md:flex-row 
+  }
+
+  #header .menu-navigation a{
+      @apply not-italic text-sm font-medium leading-[14px] tracking-[0.01em] 
+      hover:text-[#2b2b39] hover:font-semibold
+  }
+
+  #header .menu-navigation a.active{
+      @apply text-[#2b2b39] font-bold
+  }
+
+  #header .menu-action{
+      @apply flex gap-5 flex-col 
+
+      /* > md */
+      md:flex-row 
+      /* > lg */
+      lg:gap-[47px] lg:flex-row
+  }
+
+  #header .search-box{
+      @apply flex gap-2 items-center border-b-2 w-[105px]
+  }
+
+  #header .search-box img{
+      @apply w-3 h-3 object-contain
+  }
+
+  #header .search-box input{
+      @apply text-xs bg-white/0 focus:ring-transparent border-0 w-[96px]
+  }
+
+  #header .button a{
+      @apply py-[12px] px-[36px] bg-red-600 text-white rounded-[14px] text-xs leading-[14px]
+
+       hover:bg-red-700
+  }
+
+
+  /* pengumuman */
+  #pengumuman{
+     @apply bg-[linear-gradient(0deg,_rgba(241,_246,_253,_0)_1.63%,_#F1F6FD_20.5%,_#F1F6FD_58.57%,_#FFFFFF_100%)] pt-[120px] lg:pb-20
+  }
+
+  #pengumuman .title{
+      @apply text-center
+  }
+
+  #pengumuman .title h4{
+      @apply blueh4
+  }
+
+  #pengumuman .title p{
+      @apply par-a mx-auto max-w-[421px] mb-8
+  }
+
+  #pengumuman .title h2{
+      @apply title-b mt-[9px] mb-[19px]
+  }
+
+  #pengumuman .card-box{
+      @apply flex flex-wrap gap-3 md:gap-11 justify-center
+  }
+
+  #pengumuman .card{
+      @apply p-4 max-w-[960px] flex w-full bg-white h-auto rounded-[14px] shadow-[14px_22px_52px_-12px_rgba(127,_127,_127,_0.13)] items-start hover:drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)] flex-wrap justify-center  md:justify-between flex-col
+  }
+
+  #pengumuman .card-box .card{
+  @apply  md:w-[522px] lg:py-7 lg:px-4
+  }
+
+  #pengumuman .text-card{
+      @apply mt-[6px] flex flex-col gap-[14px]
+      justify-center md:justify-start text-center md:text-left
+  }
+
+  #pengumuman .text-card h1{
+      @apply justify-center md:justify-start title-c
+  }
+
+  #pengumuman .text-card p{
+      @apply text-secondary
+  }
+
+  #pengumuman .text-card .date{
+      @apply text-sm text-secondary
+  }
+
+  /* berita */
+  #berita{
+      @apply py-[120px] bg-[linear-gradient(0deg,_rgba(241,_246,_253,_0)_1.63%,_#F1F6FD_20.5%,_#F1F6FD_58.57%,_#FFFFFF_100%)]
+  }
+
+  #berita .container{
+      @apply justify-center
+  }
+
+  #berita .title{
+      @apply text-center mb-[10px]
+  }
+
+  #berita .title h4{
+      @apply blueh4
+  }
+
+  #berita .title p{
+      @apply par-a mx-auto max-w-[421px] mb-8
+  }
+
+  #berita .title h2{
+      @apply title-b mt-[9px] mb-[19px]
+  }
+
+  #berita .card-box{
+      @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center lg:justify-between
+  }
+
+  #berita .card-box .card{
+      @apply flex flex-col gap-2 lg:gap-6 p-4 bg-white rounded mb-2
+  }
+
+  #berita .card img{
+      @apply w-auto
+  }
+
+  #berita .line::before{
+      /* before */
+      @apply flex content-[''] inline-block w-[39px] h-[2px] bg-[url('../../public/assets/line.svg')] mr-[14px] bg-cover bg-no-repeat 
+  }
+
+  #berita .card h3{
+      @apply
+      
+      /* li */
+      font-semibold text-[20px] leading-8 text-[#2F2C4A] lg:mb-2 lg:mb-6 font-inter w-auto
+  }
+  #berita .text button{
+      @apply
+      /* after */
+      after:content-[''] after:inline-block after:w-[10px] after:h-[10px]  after:bg-[url('../../public/assets/arrowgray.svg')] after:ml-2 after:bg-cover after:bg-no-repeat
+      /* flexing center */
+      flex items-center
+
+      /* span text */
+      par-c
+  }
+  #berita .text button:hover{
+      @apply text-[#217BF4] after:bg-[url('../../public/assets/arrowblue.svg')]
+  }
+
+  /* footernya-footer */
+  #footernya-footer{
+      @apply bg-[#20202d] py-[30px]
+  }
+  #footernya-footer .container{
+      @apply flex flex-wrap md:justify-between items-center justify-center gap-2
+  }
+  #footernya-footer p{
+      @apply font-normal text-sm leading-[14px] text-[#f6f6f6]
+  }
+
+  /* login */
+  #login{
+  @apply w-screen h-screen bg-blue-200/75
+  }
+
+  #login .container{
+  @apply justify-center max-w-3xl
+  }
+}
