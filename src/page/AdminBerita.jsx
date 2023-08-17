@@ -168,6 +168,8 @@ function AdminBerita() {
       };
 
     const handleDelete = async (item) => {
+        setFormLoading(true)
+
         const confirmDelete = window.confirm(`Hapus data ${item.title}?`);
         
         if (confirmDelete) {
@@ -175,11 +177,13 @@ function AdminBerita() {
             const response = await fetch(baseapi+'content/delete/'+item.id, {
               method: 'POST',
             });
+
+            const responseData = await response.json();
     
-            if (response.ok) {
-              // Lakukan tindakan setelah penghapusan berhasil
+            if (responseData.status) {
               fetchData();
-              // Refresh atau perbarui tampilan data jika diperlukan
+              modeCreate();
+                setFormLoading(false)
             } else {
               console.error('Gagal menghapus data');
             }
