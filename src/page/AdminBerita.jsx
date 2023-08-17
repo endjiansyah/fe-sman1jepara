@@ -8,7 +8,6 @@ function AdminBerita() {
         title: '',
         body: '',
         image: null,
-        type: 2,
         imageBerita : null,
     });
 
@@ -40,8 +39,6 @@ function AdminBerita() {
         const newCurrentPage = jsonData.page;
         const newMaxPage = jsonData.maxpage;
 
-        console.log(newCurrentPage)
-        console.log(newMaxPage)
         setPagination({
             back: newCurrentPage > 1,
             next: newCurrentPage < newMaxPage,
@@ -83,7 +80,6 @@ function AdminBerita() {
             title: '',
             body: '',
             image: null,
-            type:2,
         })
 
         setMode({
@@ -98,7 +94,6 @@ function AdminBerita() {
             title:item.title,
             body:item.body,
             image:item.image,
-            type:2,
             imageBerita: item.image
         });
 
@@ -125,7 +120,7 @@ function AdminBerita() {
                 formData.append('image', formBerita.image)
             }
            
-            formData.append('type', formBerita.type)
+            formData.append('type', 2)
 
             const response = await fetch(baseapi+mode.endpoint, {
                 method: 'POST',
@@ -153,11 +148,13 @@ function AdminBerita() {
         const { name, value, type } = event.target;
 
         if (type === 'file') {
+            setFormLoading(true)
             setFormBerita((prevFormBerita) => ({
                 ...prevFormBerita,
                 [name]: event.target.files[0],
             }));
             formBerita.imageBerita = URL.createObjectURL(event.target.files[0])
+            setFormLoading(false)
 
         } else {
             setFormBerita((prevFormBerita) => ({
