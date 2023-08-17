@@ -2,12 +2,13 @@
 import './App.css'
 import PageBerita from './page/PageBerita'
 import PagePengumuman from './page/PagePengumuman'
+import AdminBerita from './page/AdminBerita'
 import PageLogin from './page/PageLogin'
 
 function App() {
 
   return (
-    <PagePengumuman/>
+    <AdminBerita/>
   )
 }
 
