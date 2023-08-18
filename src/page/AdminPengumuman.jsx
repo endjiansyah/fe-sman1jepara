@@ -1,5 +1,6 @@
 import '../App.css'
 import React, {useState, useEffect} from 'react'
+import formatDate from '../component/formatingDate'
 
 function AdminPengumuman() {
     const [data, setData] = useState([]);
@@ -31,7 +32,13 @@ function AdminPengumuman() {
     try {
         setPageLoading(true);
 
-        const response = await fetch(baseapi+'content/pengumuman?page='+page.current);
+        const response = await fetch(baseapi+'content/pengumuman?page='+page.current,{
+            method: 'GET',
+            headers: {
+                'apikey' : kunci
+            },
+        });
+
         const jsonData = await response.json();
 
         const newCurrentPage = jsonData.page;
@@ -115,6 +122,9 @@ function AdminPengumuman() {
 
             const response = await fetch(baseapi+mode.endpoint, {
                 method: 'POST',
+                headers: {
+                    'apikey' : kunci
+                },
                 body: formData,
             });
 
@@ -149,25 +159,28 @@ function AdminPengumuman() {
         const confirmDelete = window.confirm(`Hapus data ${item.title}?`);
         
         if (confirmDelete) {
-          try {
+            try {
             const response = await fetch(baseapi+'content/delete/'+item.id, {
-              method: 'POST',
+                method: 'POST',
+                headers: {
+                'apikey' : kunci
+                },
             });
 
             const responseData = await response.json();
-    
+
             if (responseData.status) {
                 fetchData();
                 modeCreate();
                 setFormLoading(false)
             } else {
-              console.error('Gagal menghapus data');
+                console.error('Gagal menghapus data');
             }
-          } catch (error) {
+            } catch (error) {
             console.error('Error deleting data:', error);
-          }
+            }
         }
-      };
+    };
 
       
     useEffect(() => {
@@ -209,7 +222,7 @@ function AdminPengumuman() {
                             {data.map((item) => (
                                 <tr key={item.id} className={formPengumuman.id == item.id ?'bg-yellow-100/70 hover:bg-yellow-100 border-b':'bg-white hover:bg-gray-50 border-b'}>
                                     <th scope="row" className="py-4 px-6 text-center">
-                                        {item.updated_at}
+                                        {formatDate(item.updated_at)}
                                     </th>
                                     <td className="py-4 px-6 text-center">
                                         {item.title}
