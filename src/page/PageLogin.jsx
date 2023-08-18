@@ -1,7 +1,88 @@
 import '../App.css'
+import React, {useState, useEffect} from 'react'
+import {baseapi, kunci} from '../env.js'
 
 function PageLogin() {
 
+    const[form, setForm] = useState({
+        username : '',
+        password : ''
+    })
+
+    useEffect(() => {
+        cekLogin();
+    }, []);
+
+    const cekLogin = async () => {
+        console.log(localStorage.getItem('token'))
+        if(localStorage.getItem('token')){
+            try {
+                const response = await fetch(baseapi+'me',{
+                    headers: {
+                        'apikey' : kunci,
+                        'authorization' : localStorage.getItem('token')
+                    },
+                });
+                const jsonData = await response.json();
+                console.log(jsonData)
+                localStorage.setItem('user',jsonData.data.id)
+                console.log(localStorage.getItem('user'))
+
+            } catch (error) {
+                console.log(error)
+                console.log('error')
+                localStorage.clear()
+            }
+
+        }else{
+            console.log('localStorage kosong')
+        }
+
+    }   
+
+    
+    const handleSubmit = async (event) => {
+        // setFormLoading(true)
+        event.preventDefault();
+
+        // const [fileInput, setFileInput] = useState(null);
+    
+        try {
+            const formData = new FormData();
+            formData.append('username', form.username)
+            formData.append('password', form.password)
+
+            const response = await fetch(baseapi+'login', {
+                method: 'POST',
+                headers: {
+                    'apikey' : kunci
+                },
+                body: formData,
+            });
+
+            const responseData = await response.json();
+        
+            if (responseData.status) {
+                localStorage.setItem('token', 'Bearer '+responseData.data.auth.token)
+                console.log(responseData.data)
+                console.log('ini sukses login')
+
+                // Reset the form after successful submission
+            } else {
+                console.error('Failed to send data to the server');
+            }
+        } catch (error) {
+          console.error('Error sending data:', error);
+        }
+    };
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setForm((prevForm) => ({
+            ...prevForm,
+            [name]: value,
+        }));
+      };
 
   return (
     <section id="login">
@@ -15,7 +96,7 @@ function PageLogin() {
                         <img src="logosmansara.png" alt="SMAN 1 Jepara" className="text-center w-52"/>
                     </div>
                     <hr/>
-                    <form action="{{route('login')}}" method="POST">
+                    <form onSubmit={handleSubmit}>
                         
                         <div>
                             <label htmlFor="username" className="block text-sm font-medium text-gray-700 leading-5">
@@ -23,7 +104,7 @@ function PageLogin() {
                             </label>
 
                             <div className="mt-1 rounded-md shadow-sm">
-                                <input id="username" name="username" type="text" required autoFocus className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                                <input id="username" name="username" type="text" required autoFocus className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" onChange={handleChange}/>
                             </div>
 
                         </div>
@@ -34,7 +115,7 @@ function PageLogin() {
                             </label>
 
                             <div className="mt-1 rounded-md shadow-sm">
-                                <input id="password" name="password" type="password" required className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                                <input id="password" name="password" type="password" required className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" onChange={handleChange} />
                             </div>
 
                         </div>

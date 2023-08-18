@@ -1,5 +1,8 @@
 import '../App.css'
 import React, {useState, useEffect} from 'react'
+import formatDate from '../component/formatingDate'
+import {baseapi, kunci} from '../env.js'
+
 
 function PageBerita() {
     const [data, setData] = useState([]);
@@ -19,7 +22,11 @@ function PageBerita() {
 
     const fetchData = async () => {
     try {
-        const response = await fetch(baseapi+'content/berita');
+        const response = await fetch(baseapi+'content/berita',{
+            headers:{
+                'apikey':kunci,
+            }
+        });
         const jsonData = await response.json();
         setData(jsonData.data);
         setIsLoading(false);
@@ -28,12 +35,6 @@ function PageBerita() {
         console.error('Error fetching data:', error);
         }
     }
-
-    function formatDate(dateTimeString) {
-        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
-        const dateTime = new Date(dateTimeString);
-        return dateTime.toLocaleDateString('id-ID', options);
-      }
 
     const closeBerita = () => {
         setBerita({
@@ -75,7 +76,7 @@ function PageBerita() {
                         </div>
                         <div className=" p-4 md:px-6 md:pb-6">
                             <div className="w-full flex justify-center">
-                                {Berita.image != '' && <img src="./logosmansara.png" alt={Berita.title}/>}
+                                {Berita.image != '' && <img src="/logosmansara.png" alt={Berita.title}/>}
                             </div>
                             <div>
                                 {Berita.image != '' && <br/>}
@@ -95,7 +96,7 @@ function PageBerita() {
                     {data.map((item) => (
                     <div className={Berita.id == item.id ? 'border-blue-400 border-4 card'  : 'card'} key={item.id}>
                         <div className="w-full flex justify-center">
-                            <img src={item.image != ''? item.image : './logosmansara.png' } alt={item.title} />
+                            <img src={item.image != ''? item.image : '/logosmansara.png' } alt={item.title} />
                         </div>
                         
                         <div className="text">         

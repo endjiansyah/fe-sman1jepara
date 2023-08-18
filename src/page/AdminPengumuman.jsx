@@ -1,6 +1,7 @@
 import '../App.css'
 import React, {useState, useEffect} from 'react'
 import formatDate from '../component/formatingDate'
+import {baseapi, kunci} from '../env.js'
 
 function AdminPengumuman() {
     const [data, setData] = useState([]);

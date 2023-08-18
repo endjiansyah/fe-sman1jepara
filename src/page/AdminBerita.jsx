@@ -1,5 +1,6 @@
 import '../App.css'
 import React, {useState, useEffect} from 'react'
+import {baseapi, kunci} from '../env.js'
 
 function AdminBerita() {
     const [data, setData] = useState([]);
@@ -31,9 +32,15 @@ function AdminBerita() {
 
     const fetchData = async () => {
     try {
+    console.log(baseapi)
+
         setPageLoading(true);
 
-        const response = await fetch(baseapi+'content/berita?page='+page.current);
+        const response = await fetch(baseapi+'content/berita?page='+page.current,{
+            headers:{
+                'apikey':kunci
+            }
+        });
         const jsonData = await response.json();
 
         const newCurrentPage = jsonData.page;
@@ -307,7 +314,7 @@ function AdminBerita() {
                                     onChange={handleChange}
                                     id="image" name="image" type="file"
                                      hidden/>
-                                    <img src={formBerita.imageBerita ? formBerita.imageBerita : 'logosmansara.png'} className='h-24' />                              
+                                    <img src={formBerita.imageBerita ? formBerita.imageBerita : '/logosmansara.png'} className='h-24' />                              
                                     
                                 </label>
                             </div>

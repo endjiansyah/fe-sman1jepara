@@ -1,5 +1,7 @@
 import '../App.css'
 import React, {useState, useEffect} from 'react'
+import formatDate from '../component/formatingDate'
+import {baseapi, kunci} from '../env.js'
 
 function PagePengumuman() {
     const [data, setData] = useState([]);
@@ -27,12 +29,6 @@ function PagePengumuman() {
         console.error('Error fetching data:', error);
         }
     }
-
-    function formatDate(dateTimeString) {
-        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
-        const dateTime = new Date(dateTimeString);
-        return dateTime.toLocaleDateString('id-ID', options);
-      }
 
     const closePengumuman = () => {
         setPengumuman({
