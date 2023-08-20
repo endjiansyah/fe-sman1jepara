@@ -2,6 +2,8 @@ import '../App.css'
 import React, {useState, useEffect} from 'react'
 import formatDate from '../component/formatingDate'
 import {baseapi, kunci} from '../env.js'
+import spinnerLoading from '../component/spinnerLoading'
+import Navbar from '../component/navbar'
 
 function PagePengumuman() {
     const [data, setData] = useState([]);
@@ -20,6 +22,7 @@ function PagePengumuman() {
 
     const fetchData = async () => {
     try {
+        setIsLoading(true)
         const response = await fetch(baseapi+'content/pengumuman',{
             headers:{
                 'apikey' : kunci
@@ -56,6 +59,9 @@ function PagePengumuman() {
     };
 
   return (
+    <>
+    <Navbar isAdmin={false} currentPage="pengumuman" />
+
     <section id="pengumuman">
         <div className="container min-h-[75vh] mb-8">
             <div className="title">
@@ -84,24 +90,27 @@ function PagePengumuman() {
                 </div>
                     
                 <hr className="mb-2"/>
-                <div className="card-box">
+                {!isLoading && 
+                    <div className="card-box">
+                        {data.map((item) => (
+                            <button key={item.id} className={Pengumuman.id == item.id ? 'border-4 border-blue-700 card' : 'card'} onClick={() => showPengumuman(item)}>
+                                <div className="text-card">
+                                    <h1 className='text-left'>{item.title}</h1>
 
-                    {data.map((item) => (
-                        <button key={item.id} className={Pengumuman.id == item.id ? 'border-4 border-blue-700 card' : 'card'} onClick={() => showPengumuman(item)}>
-                            <div className="text-card">
-                                <h1 className='text-left'>{item.title}</h1>
-
-                                <p className="date">
-                                    {formatDate(item.updated_at)}
-                                </p>
-                            </div>
-                        </button>
-                    ))}
-                </div>
+                                    <p className="date">
+                                        {formatDate(item.updated_at)}
+                                    </p>
+                                </div>
+                            </button>
+                        ))}
+                    </div>
+                }
+                {isLoading && spinnerLoading()}
 
             </div>
         </div>
     </section>
+    </>
 
   )
 }

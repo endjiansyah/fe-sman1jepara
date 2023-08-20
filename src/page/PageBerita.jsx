@@ -2,6 +2,7 @@ import '../App.css'
 import React, {useState, useEffect} from 'react'
 import formatDate from '../component/formatingDate'
 import {baseapi, kunci} from '../env.js'
+import Navbar from '../component/navbar'
 
 
 function PageBerita() {
@@ -60,6 +61,8 @@ function PageBerita() {
     };
 
   return (
+    <>
+    <Navbar isAdmin={false} currentPage="berita" />
     <section id="berita">
         <div className="container min-h-[75vh]">
             <div className="title">
@@ -115,6 +118,7 @@ function PageBerita() {
             </div>
         </div>
     </section>
+    </>
   )
 }
 

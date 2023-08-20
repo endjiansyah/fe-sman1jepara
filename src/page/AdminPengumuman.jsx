@@ -2,6 +2,7 @@ import '../App.css'
 import React, {useState, useEffect} from 'react'
 import formatDate from '../component/formatingDate'
 import {baseapi, kunci} from '../env.js'
+import Navbar from '../component/navbar'
 
 function AdminPengumuman() {
     const [data, setData] = useState([]);
@@ -189,6 +190,9 @@ function AdminPengumuman() {
     }, []);
 
   return (
+    <>
+    <Navbar isAdmin={true} currentPage="pengumuman" />
+    
     <section id="pengumuman">
         <div className="container min-h-[75vh] mb-8">
             <div className="title" id="top">
@@ -318,6 +322,7 @@ function AdminPengumuman() {
             </div>
         </div>
     </section>
+    </>
 
   )
 }

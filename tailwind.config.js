@@ -16,9 +16,6 @@ export default {
               sm: '20px',
               md: '20px'
           },
-          screens:{
-              xl: '1170px',
-          },
           center:true,
       },
       extend: {
@@ -30,5 +27,7 @@ export default {
           }
       }
     },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin')
+  ],
 }

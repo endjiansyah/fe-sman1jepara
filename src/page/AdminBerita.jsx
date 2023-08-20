@@ -1,6 +1,7 @@
 import '../App.css'
 import React, {useState, useEffect} from 'react'
 import {baseapi, kunci} from '../env.js'
+import Navbar from '../component/navbar';
 
 function AdminBerita() {
     const [data, setData] = useState([]);
@@ -208,6 +209,8 @@ function AdminBerita() {
     }, []);
 
   return (
+    <>
+    <Navbar isAdmin={true} currentPage="berita" />
     <section id="pengumuman">
         <div className="container min-h-[75vh] mb-8">
             <div className="title" id="top">
@@ -354,6 +357,7 @@ function AdminBerita() {
             </div>
         </div>
     </section>
+    </>
 
   )
 }
