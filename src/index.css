@@ -201,7 +201,7 @@
 
   /* berita */
   #berita{
-      @apply py-[120px] bg-[linear-gradient(0deg,_rgba(241,_246,_253,_0)_1.63%,_#F1F6FD_20.5%,_#F1F6FD_58.57%,_#FFFFFF_100%)]
+      @apply pt-[120px] pb-8 bg-[linear-gradient(0deg,_rgba(241,_246,_253,_0)_1.63%,_#F1F6FD_20.5%,_#F1F6FD_58.57%,_#FFFFFF_100%)]
   }
 
   #berita .container{

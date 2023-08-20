@@ -6,11 +6,13 @@ import PagePengumuman from './page/PagePengumuman';
 import AdminBerita from './page/AdminBerita';
 import AdminPengumuman from './page/AdminPengumuman';
 import PageLogin from './page/PageLogin';
+import PageMain from './page/main'; 
 
 function App() {
   return (
     <BrowserRouter>
     <Routes>
+        <Route path="/" element={<PageMain/>} />
         <Route path="/login" element={<PageLogin/>} />
         <Route path="/berita" element={<PageBerita/>} />
         <Route path="/pengumuman" element={<PagePengumuman/>} />
