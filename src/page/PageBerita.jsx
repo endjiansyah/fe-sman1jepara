@@ -76,10 +76,10 @@ function PageBerita() {
                         </div>
                         <div className=" p-4 md:px-6 md:pb-6">
                             <div className="w-full flex justify-center">
-                                {Berita.image != '' && <img src="/logosmansara.png" alt={Berita.title}/>}
+                                {Berita.image != null && <img src="/logosmansara.png" alt={Berita.title}/>}
                             </div>
                             <div>
-                                {Berita.image != '' && <br/>}
+                                {Berita.image != null && <br/>}
                                 <div className="line"></div>
                                 <h3>{Berita.title}</h3>
                                 <hr className="mb-2"/>
@@ -96,7 +96,7 @@ function PageBerita() {
                     {data.map((item) => (
                     <div className={Berita.id == item.id ? 'border-blue-400 border-4 card'  : 'card'} key={item.id}>
                         <div className="w-full flex justify-center">
-                            <img src={item.image != ''? item.image : '/logosmansara.png' } alt={item.title} />
+                            <img src={item.image != null ? item.image : '/logosmansara.png' } alt={item.title} />
                         </div>
                         
                         <div className="text">         

@@ -238,7 +238,7 @@
 
   #berita .line::before{
       /* before */
-      @apply flex content-[''] inline-block w-[39px] h-[2px] bg-[url('../../public/assets/line.svg')] mr-[14px] bg-cover bg-no-repeat 
+      @apply flex content-[''] inline-block w-[39px] h-[2px] bg-[url('/line.svg')] mr-[14px] bg-cover bg-no-repeat 
   }
 
   #berita .card h3{
@@ -250,7 +250,7 @@
   #berita .text button{
       @apply
       /* after */
-      after:content-[''] after:inline-block after:w-[10px] after:h-[10px]  after:bg-[url('../../public/assets/arrowgray.svg')] after:ml-2 after:bg-cover after:bg-no-repeat
+      after:content-[''] after:inline-block after:w-[10px] after:h-[10px]  after:bg-[url('/arrowgray.svg')] after:ml-2 after:bg-cover after:bg-no-repeat
       /* flexing center */
       flex items-center
 
@@ -258,7 +258,7 @@
       par-c
   }
   #berita .text button:hover{
-      @apply text-[#217BF4] after:bg-[url('../../public/assets/arrowblue.svg')]
+      @apply text-[#217BF4] after:bg-[url('/arrowblue.svg')]
   }
 
   /* footernya-footer */

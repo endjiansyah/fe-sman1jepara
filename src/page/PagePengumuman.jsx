@@ -20,7 +20,11 @@ function PagePengumuman() {
 
     const fetchData = async () => {
     try {
-        const response = await fetch(baseapi+'content/pengumuman');
+        const response = await fetch(baseapi+'content/pengumuman',{
+            headers:{
+                'apikey' : kunci
+            }
+        });
         const jsonData = await response.json();
         setData(jsonData.data);
         setIsLoading(false);

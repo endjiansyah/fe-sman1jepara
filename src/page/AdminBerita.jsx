@@ -32,7 +32,6 @@ function AdminBerita() {
 
     const fetchData = async () => {
     try {
-    console.log(baseapi)
 
         setPageLoading(true);
 
@@ -131,6 +130,9 @@ function AdminBerita() {
 
             const response = await fetch(baseapi+mode.endpoint, {
                 method: 'POST',
+                headers:{
+                    'apikey' : kunci
+                },
                 body: formData,
             });
 
@@ -154,7 +156,7 @@ function AdminBerita() {
     const handleChange = (event) => {
         const { name, value, type } = event.target;
 
-        if (type === 'file') {
+        if (type === 'file' && value != '') {
             setFormLoading(true)
             setFormBerita((prevFormBerita) => ({
                 ...prevFormBerita,
@@ -180,6 +182,9 @@ function AdminBerita() {
           try {
             const response = await fetch(baseapi+'content/delete/'+item.id, {
               method: 'POST',
+              headers:{
+                'apikey' : kunci
+              }
             });
 
             const responseData = await response.json();
@@ -237,7 +242,7 @@ function AdminBerita() {
                             {data.map((item) => (
                                 <tr key={item.id} className={formBerita.id == item.id ?'bg-yellow-100/70 hover:bg-yellow-100 border-b':'bg-white hover:bg-gray-50 border-b'}>
                                     <th scope="row" className="py-4 px-6 text-center">
-                                        {item.image != '' && 
+                                        {item.image != null && 
                                             <img src={item.image} alt={item.title} className="h-24"/>
                                         }
                                     </th>
