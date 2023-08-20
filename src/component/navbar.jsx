@@ -1,8 +1,41 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import logo from '/smansara.png';
+import {baseapi, kunci} from '../env.js'
+import { Link, useNavigate } from 'react-router-dom';
 
 function Navbar({ isAdmin, currentPage }) {
+  const navigate = useNavigate();
+
+  const handleLogout =async () => {
+    const confirmLogout = window.confirm('Apakah Anda yakin ingin logout?');
+    if (confirmLogout) {
+      try {
+        const response = await fetch(baseapi+'logout', {
+            method: 'GET',
+            headers: {
+                'apikey' : kunci,
+                'authorization' : localStorage.getItem('token')
+
+            }
+        });
+
+        const responseData = await response.json();
+    
+        if (responseData.status) {
+
+          localStorage.removeItem('token');
+          navigate('/login');
+
+            // Reset the form after successful submission
+        } else {
+          console.log(responseData)
+            console.error('Failed to send data to the server');
+        }
+      } catch (error) {
+        console.error('Error sending data:', error);
+      }
+    }
+  };
   return (
     <nav id="header" className="border-[primary]/10">
       <div className="container">
@@ -73,7 +106,7 @@ function Navbar({ isAdmin, currentPage }) {
             <div className="menu-action">
               {isAdmin ? (
                 <div className="button">
-                  <a href="/logout">Log out</a>
+                  <button onClick={handleLogout}>Log out</button>
                 </div>
               ) : null}
             </div>

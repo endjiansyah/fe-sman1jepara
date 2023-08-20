@@ -70,9 +70,7 @@ function PageLogin() {
         
             if (responseData.status) {
                 localStorage.setItem('token', 'Bearer '+responseData.data.auth.token)
-                console.log(responseData.data)
-                console.log('ini sukses login')
-
+                navigateTo('/admin/berita');
                 // Reset the form after successful submission
             } else {
                 console.error('Failed to send data to the server');
@@ -96,7 +94,7 @@ function PageLogin() {
       <section id="login">
       {!pageLoading && 
     <div className="container h-[100vh]">
-        <div className="pt-8">
+        <div className="pt-24">
             
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 
