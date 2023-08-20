@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react'
 import formatDate from '../component/formatingDate'
 import {baseapi, kunci} from '../env.js'
 import Navbar from '../component/navbar'
+import spinnerLoading from '../component/spinnerLoading'
 
 
 function PageBerita() {
@@ -23,6 +24,7 @@ function PageBerita() {
 
     const fetchData = async () => {
     try {
+        setIsLoading(true)
         const response = await fetch(baseapi+'content/berita',{
             headers:{
                 'apikey':kunci,
@@ -34,6 +36,8 @@ function PageBerita() {
 
         } catch (error) {
         console.error('Error fetching data:', error);
+        setIsLoading(false);
+        
         }
     }
 
@@ -53,11 +57,14 @@ function PageBerita() {
             id:item.id,
             title:item.title,
             body:item.body,
-            time:item.time,
+            time:item.updated_at,
             image:item.image,
             show:'true',
         });
-        window.location.href='#bacaberita'
+        const beritaSection = document.getElementById('bacaberita');
+        if (beritaSection) {
+            beritaSection.scrollIntoView({ behavior: 'smooth' });
+        }
     };
 
   return (
@@ -70,16 +77,19 @@ function PageBerita() {
                 <p>Berita SMA Negeri 1 Jepara</p>
             </div>
 
+            {isLoading && spinnerLoading()}
+            {!isLoading &&
             <div>
                 {Berita.show == 'true' && 
+                <>
                     <div className="card mb-8 md:mx-2 lg:mx-4 rounded-xl bg-white border-blue-400 border-4 shadow-lg">
                         <div className="flex justify-between w-full p-1">
-                            <p>{Berita.time}</p>
+                            <p>{formatDate(Berita.time)}</p>
                             <button onClick={closeBerita} className="bg-red-500 hover:bg-red-600 text-white text-center w-7 h-7 rounded-full">x</button>
                         </div>
                         <div className=" p-4 md:px-6 md:pb-6">
                             <div className="w-full flex justify-center">
-                                {Berita.image != null && <img src="/logosmansara.png" alt={Berita.title}/>}
+                                {Berita.image != null && <img src={Berita.image} alt={Berita.title}/>}
                             </div>
                             <div>
                                 {Berita.image != null && <br/>}
@@ -90,9 +100,9 @@ function PageBerita() {
                             </div>
                         </div>
                     </div>
+                    <hr className="mb-2"/>
+                </>
                 }
-                
-                <hr className="mb-2"/>
                 
                 <div className="card-box">
 
@@ -116,6 +126,7 @@ function PageBerita() {
                     
                 </div>
             </div>
+            }
         </div>
     </section>
     </>

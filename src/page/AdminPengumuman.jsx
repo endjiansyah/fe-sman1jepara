@@ -106,7 +106,10 @@ function AdminPengumuman() {
             endpoint:'content/update/'+item.id,
         })
 
-        window.location.href='#top'
+        const topSection = document.getElementById('top');
+        if (topSection) {
+            topSection.scrollIntoView({ behavior: 'smooth' });
+        }
     };
 
     const handleSubmit = async (event) => {

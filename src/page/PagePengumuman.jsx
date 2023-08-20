@@ -55,7 +55,10 @@ function PagePengumuman() {
             time:item.updated_at,
             show:'true',
         });
-        window.location.href='#bacapengumuman'
+        const pengumumanSection = document.getElementById('bacapengumuman');
+        if (pengumumanSection) {
+            pengumumanSection.scrollIntoView({ behavior: 'smooth' });
+        }
     };
 
   return (

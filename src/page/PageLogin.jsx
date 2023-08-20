@@ -1,20 +1,23 @@
 import '../App.css'
 import React, {useState, useEffect} from 'react'
 import {baseapi, kunci} from '../env.js'
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../component/navbar';
 
 function PageLogin() {
-
-    const[form, setForm] = useState({
+    const [pageLoading, setPageLoading] = useState(true);
+    const [form, setForm] = useState({
         username : '',
         password : ''
-    })
+    });
+    const navigateTo = useNavigate();
 
     useEffect(() => {
         cekLogin();
     }, []);
 
     const cekLogin = async () => {
-        console.log(localStorage.getItem('token'))
+        setPageLoading(true)
         if(localStorage.getItem('token')){
             try {
                 const response = await fetch(baseapi+'me',{
@@ -24,21 +27,24 @@ function PageLogin() {
                     },
                 });
                 const jsonData = await response.json();
-                console.log(jsonData)
-                localStorage.setItem('user',jsonData.data.id)
-                console.log(localStorage.getItem('user'))
+                if(jsonData.status){
+                    navigateTo('/admin/berita');
+                }else{
+                    localStorage.removeItem('token')
+                    setPageLoading(false)
+                }
 
             } catch (error) {
-                console.log(error)
-                console.log('error')
-                localStorage.clear()
+                localStorage.removeItem('token')
+                setPageLoading(false)
             }
 
         }else{
-            console.log('localStorage kosong')
+            setPageLoading(false)
+
         }
 
-    }   
+    }
 
     
     const handleSubmit = async (event) => {
@@ -85,7 +91,10 @@ function PageLogin() {
       };
 
   return (
-    <section id="login">
+    <>
+    {!pageLoading && <Navbar isAdmin={false} currentPage="login" />}
+      <section id="login">
+      {!pageLoading && 
     <div className="container h-[100vh]">
         <div className="pt-8">
             
@@ -135,7 +144,9 @@ function PageLogin() {
             </div>
         </div>
     </div>
-</section>
+    }
+    </section>
+    </>
   )
 }
 
