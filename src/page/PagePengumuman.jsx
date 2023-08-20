@@ -49,7 +49,7 @@ function PagePengumuman() {
             id:item.id,
             title:item.title,
             body:item.body,
-            time:item.time,
+            time:item.updated_at,
             show:'true',
         });
         window.location.href='#bacapengumuman'
@@ -57,7 +57,7 @@ function PagePengumuman() {
 
   return (
     <section id="pengumuman">
-        <div className="container min-h-[75vh]">
+        <div className="container min-h-[75vh] mb-8">
             <div className="title">
                 <h2 id="bacapengumuman">Pengumuman</h2>
                 <p>
@@ -69,7 +69,9 @@ function PagePengumuman() {
                 <div className="w-full flex justify-center">
                 {Pengumuman.show == 'true' && 
                     <div className="card border-4 border-blue-700">
-                        <div className="flex justify-end w-full py-0 h-auto">
+                        <div className="flex justify-between w-full py-0 h-auto">
+                            {formatDate(Pengumuman.time)}
+
                             <button onClick={closePengumuman} className="bg-red-500 hover:bg-red-600 text-white text-center w-7 h-7 rounded-full">x</button>
                         </div>
                         <hr/>
