@@ -86,7 +86,8 @@ function PagePengumuman() {
                         <hr/>
                         <div className="text-card w-full">
                             <h1 className="text-center">{Pengumuman.title}</h1>
-                            <p>{Pengumuman.body}</p>
+                            <div dangerouslySetInnerHTML={{ __html: Pengumuman.body }} />
+
                         </div>
                     </div>
                 }

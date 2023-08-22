@@ -96,7 +96,7 @@ function PageBerita() {
                                 <div className="line"></div>
                                 <h3>{Berita.title}</h3>
                                 <hr className="mb-2"/>
-                                <p>{Berita.body}</p>
+                                <div dangerouslySetInnerHTML={{ __html: Berita.body }} />
                             </div>
                         </div>
                     </div>
