@@ -1,10 +1,13 @@
 import '../App.css'
-import React, {useState, useEffect} from 'react'
-import {baseapi, kunci} from '../env.js'
+import React, {useState, useEffect,useRef} from 'react'
+import {baseapi, kunci,mcekey} from '../env.js'
 import Navbar from '../component/navbar';
 import {useNavigate } from 'react-router-dom';
+import { Editor } from '@tinymce/tinymce-react';
+
 
 function AdminBerita() {
+    const editorRef = useRef(null);
     const navigate = useNavigate();
     const [fullLoading, setFullLoading] = useState(true);
 
@@ -42,7 +45,7 @@ function AdminBerita() {
     const [formBerita, setFormBerita] = useState({
         id: '',
         title: '',
-        body: '',
+        bodyform: '',
         image: null,
         imageBerita : null,
     });
@@ -119,7 +122,7 @@ function AdminBerita() {
         setFormBerita({
             id: '',
             title: '',
-            body: '',
+            bodyform: '',
             image: null,
         })
 
@@ -133,7 +136,7 @@ function AdminBerita() {
         setFormBerita({
             id:item.id,
             title:item.title,
-            body:item.body,
+            bodyform:item.body,
             image:item.image,
             imageBerita: item.image
         });
@@ -158,7 +161,7 @@ function AdminBerita() {
         try {
             const formData = new FormData();
             formData.append('title', formBerita.title)
-            formData.append('body', formBerita.body)
+            formData.append('body', editorRef.current.getContent())
 
             if(formBerita.image){
                 formData.append('image', formBerita.image)
@@ -240,7 +243,13 @@ function AdminBerita() {
         }
       };
 
-      
+      const handleChangeTextArea = (event) => {
+        const { value } = event.target;
+        setFormBerita((prevFormBerita) => ({
+            ...prevFormBerita,
+            bodyform: value,
+        }));
+    };
     useEffect(() => {
         cekLogin();
         fetchData();
@@ -327,7 +336,7 @@ function AdminBerita() {
 
                     <div className="w-full lg:w-1/2">
 
-                        <div className={mode.form == 'create' ? 'bg-white flex flex-col gap-2 shadow p-3' : 'bg-yellow-100/70 flex flex-col gap-2 shadow p-3'}>
+                        <div className={mode.form == 'create' ? 'bg-blue-100 flex flex-col gap-2 shadow p-3' : 'bg-yellow-100/70 flex flex-col gap-2 shadow p-3'}>
                             <div className="flex justify-between">
                                 <h2 className="font-bold">{mode.form == 'create'? 'buat berita' : 'Edit berita'}</h2>
                                 <button onClick={modeCreate} className={mode.form == 'create' ? 'hidden' : 'px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-500'}>Batal Edit</button>
@@ -347,8 +356,27 @@ function AdminBerita() {
                                     Body
                                 </label>
                                 <div className="mt-1 rounded-md shadow-sm">
-                                    <textarea value={formBerita.body} id="body" name="body" type="text" required className="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="Isi Berita" onChange={handleChange}>
-                                    </textarea>
+                                <Editor
+                                    apiKey={mcekey}
+                                    onInit={(evt, editor) => editorRef.current = editor}
+                                    value={formBerita.bodyform}
+                                    id="bodyform"
+                                    onChange={handleChangeTextArea}
+                                    init={{
+                                    height: 500,
+                                    menubar: false,
+                                    plugins: [
+                                        'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                                        'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                                        'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
+                                    ],
+                                    toolbar: 'undo redo | blocks | ' +
+                                        'bold italic forecolor | alignleft aligncenter ' +
+                                        'alignright alignjustify | bullist numlist outdent indent | ' +
+                                        'removeformat | help',
+                                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                                    }}
+                                />
                                 </div>
 
                                 <label htmlFor="image" className="mt-3 block text-sm font-medium text-gray-700 leading-5">

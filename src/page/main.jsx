@@ -65,7 +65,6 @@ function PageMain() {
                 limitContent.pengumuman = jsonPengumuman.maxpage
             
         }
-        console.log(limitContent)
         setIsLoading(false);
 
         } catch (error) {
@@ -159,7 +158,8 @@ function PageMain() {
                                     <div className="line"></div>
                                     <h3>{Berita.title}</h3>
                                     <hr className="mb-2"/>
-                                    <p>{Berita.body}</p>
+                                    <div dangerouslySetInnerHTML={{ __html: Berita.body }} />
+
                                 </div>
                             </div>
                         </div>
@@ -223,7 +223,7 @@ function PageMain() {
                         <hr/>
                         <div className="text-card w-full">
                             <h1 className="text-center">{Pengumuman.title}</h1>
-                            <p>{Pengumuman.body}</p>
+                            <div dangerouslySetInnerHTML={{ __html: Pengumuman.body }} />
                         </div>
                     </div>
                 }
@@ -243,7 +243,6 @@ function PageMain() {
                                 </div>
                             </button>
                         ))}
-                    </div>
                     {+limitContent.pengumuman > 1 && 
                         <Link
                             to='pengumuman'
@@ -252,6 +251,7 @@ function PageMain() {
                             Show More
                         </Link>
                     }
+                    </div>
 
             </div>
         </div>

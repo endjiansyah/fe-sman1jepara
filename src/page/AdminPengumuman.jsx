@@ -1,12 +1,14 @@
 import '../App.css'
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect,useRef} from 'react'
 import formatDate from '../component/formatingDate'
-import {baseapi, kunci} from '../env.js'
+import {baseapi, kunci, mcekey} from '../env.js'
 import Navbar from '../component/navbar'
 import {useNavigate } from 'react-router-dom';
-
+import { Editor } from '@tinymce/tinymce-react';
 
 function AdminPengumuman() {
+    const editorRef = useRef(null);
+
     const navigate = useNavigate();
     const [fullLoading, setFullLoading] = useState(true);
 
@@ -44,7 +46,7 @@ function AdminPengumuman() {
     const [formPengumuman, setFormPengumuman] = useState({
         id: '',
         title: '',
-        body: '',
+        bodyform: '',
     });
 
 
@@ -120,7 +122,7 @@ function AdminPengumuman() {
         setFormPengumuman({
             id: '',
             title: '',
-            body: '',
+            bodyform: '',
         })
 
         setMode({
@@ -133,9 +135,10 @@ function AdminPengumuman() {
         setFormPengumuman({
             id:item.id,
             title:item.title,
-            body:item.body,
+            bodyform:item.body,
         });
 
+        
         setMode({
             form: 'update',
             endpoint:'content/update/'+item.id,
@@ -145,6 +148,7 @@ function AdminPengumuman() {
         if (topSection) {
             topSection.scrollIntoView({ behavior: 'smooth' });
         }
+        editorRef.current.setContent(item.body);
     };
 
     const handleSubmit = async (event) => {
@@ -156,7 +160,7 @@ function AdminPengumuman() {
         try {
             const formData = new FormData();
             formData.append('title', formPengumuman.title)
-            formData.append('body', formPengumuman.body)
+            formData.append('body', editorRef.current.getContent())
            
             formData.append('type', 1)
 
@@ -178,7 +182,7 @@ function AdminPengumuman() {
 
                 // Reset the form after successful submission
             } else {
-                console.error('Failed to send data to the server');
+                console.log(responseData);
             }
         } catch (error) {
           console.error('Error sending data:', error);
@@ -220,6 +224,14 @@ function AdminPengumuman() {
             console.error('Error deleting data:', error);
             }
         }
+    };
+
+    const handleChangeTextArea = (event) => {
+        const { value } = event.target;
+        setFormPengumuman((prevFormPengumuman) => ({
+            ...prevFormPengumuman,
+            bodyform: value,
+        }));
     };
 
       
@@ -308,7 +320,7 @@ function AdminPengumuman() {
 
                     <div className="w-full lg:w-1/2">
 
-                        <div className={mode.form == 'create' ? 'bg-white flex flex-col gap-2 shadow p-3' : 'bg-yellow-100/70 flex flex-col gap-2 shadow p-3'}>
+                        <div className={mode.form == 'create' ? 'bg-blue-100 flex flex-col gap-2 shadow p-3' : 'bg-yellow-100/70 flex flex-col gap-2 shadow p-3'}>
                             <div className="flex justify-between">
                                 <h2 className="font-bold">{mode.form == 'create'? 'buat pengumuman' : 'Edit pengumuman'}</h2>
                                 <button onClick={modeCreate} className={mode.form == 'create' ? 'hidden' : 'px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-500'}>Batal Edit</button>
@@ -324,12 +336,31 @@ function AdminPengumuman() {
                                     <input value={formPengumuman.title} id="title" name="title" type="text" required autoFocus className="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="Judul Pengumuman" onChange={handleChange}/>
                                 </div>
                         
-                                <label htmlFor="body" className="mt-3 block text-sm font-medium text-gray-700 leading-5">
+                                <label htmlFor="bodyform" className="mt-3 block text-sm font-medium text-gray-700 leading-5">
                                     Body
                                 </label>
                                 <div className="mt-1 rounded-md shadow-sm">
-                                    <textarea value={formPengumuman.body} id="body" name="body" type="text" required className="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="Isi Pengumuman" onChange={handleChange}>
-                                    </textarea>
+                                <Editor
+                                    apiKey={mcekey}
+                                    onInit={(evt, editor) => editorRef.current = editor}
+                                    value={formPengumuman.bodyform}
+                                    id="bodyform"
+                                    onChange={handleChangeTextArea}
+                                    init={{
+                                    height: 500,
+                                    menubar: false,
+                                    plugins: [
+                                        'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                                        'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                                        'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
+                                    ],
+                                    toolbar: 'undo redo | blocks | ' +
+                                        'bold italic forecolor | alignleft aligncenter ' +
+                                        'alignright alignjustify | bullist numlist outdent indent | ' +
+                                        'removeformat | help',
+                                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                                    }}
+                                />
                                 </div>
                         
                                 <hr className="my-3"/>
