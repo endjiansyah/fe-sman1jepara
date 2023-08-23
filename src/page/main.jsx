@@ -243,15 +243,17 @@ function PageMain() {
                                 </div>
                             </button>
                         ))}
+                    </div>
                     {+limitContent.pengumuman > 1 && 
+                    <div className="card-box">    
                         <Link
                             to='pengumuman'
                             className='text-2xl text-gray-600 hover:text-gray-800 my-8'
                         >
                             Show More
                         </Link>
-                    }
                     </div>
+                    }
 
             </div>
         </div>

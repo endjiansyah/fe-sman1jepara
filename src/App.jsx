@@ -18,7 +18,7 @@ function App() {
         <Route path="/pengumuman" element={<PagePengumuman/>} />
         <Route path="/admin/berita" element={<AdminBerita/>} />
         <Route path="/admin/pengumuman" element={<AdminPengumuman/>} />
-        <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="*" element={<Navigate to="/" />} />
     </Routes>
     </BrowserRouter>
   );

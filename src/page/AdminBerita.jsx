@@ -9,6 +9,10 @@ import spinnerLoading from '../component/spinnerLoading'
 
 function AdminBerita() {
     const editorRef = useRef(null);
+    const [alerts, setAlerts] = useState({
+        save : false,
+        fail : false
+    });
     const navigate = useNavigate();
     const [fullLoading, setFullLoading] = useState(true);
 
@@ -95,7 +99,7 @@ function AdminBerita() {
         });
 
         setData(jsonData.data);
-        setPageLoading(false);        
+        setPageLoading(false);
 
         } catch (error) {
         console.error('Error fetching data:', error);
@@ -185,13 +189,24 @@ function AdminBerita() {
                 fetchData();
                 modeCreate();
                 setFormLoading(false)
-
+                setAlerts({ ...alerts, save: true });
+                setTimeout(() => {
+                    setAlerts({ ...alerts, save: false });
+                  }, 5000);
                 // Reset the form after successful submission
             } else {
-                console.error('Failed to send data to the server');
+                setFormLoading(false)
+                setAlerts({ ...alerts, fail: true });
+                setTimeout(() => {
+                    setAlerts({ ...alerts, fail: false });
+                  }, 5000);
             }
         } catch (error) {
-          console.error('Error sending data:', error);
+            setFormLoading(false)
+            setAlerts({ ...alerts, fail: true });
+            setTimeout(() => {
+                setAlerts({ ...alerts, fail: false });
+              }, 5000);
         }
     };
 
@@ -402,9 +417,12 @@ function AdminBerita() {
                                                 {spinnerLoading()}
                                             </div>
                                             }
-                                        {/* @if ($message = Session::get('successktg'))
-                                            <div className="text-green-600" role="alert">{{ $message }}</div>
-                                        @endif */}
+                                        {alerts.save &&
+                                            (<div className="text-green-600" role="alert">Data Tersimpan</div>)
+                                        }
+                                        {alerts.fail &&
+                                            (<div className="text-red-600" role="alert">title dan body wajib diisi</div>)
+                                        }
                                     </span>
                                 </div>
                             </form>
