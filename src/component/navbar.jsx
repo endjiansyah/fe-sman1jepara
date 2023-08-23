@@ -77,7 +77,7 @@ function Navbar({ isAdmin, currentPage }) {
               <ul>
                 <li>
                   <Link
-                    to={isAdmin ? '/admin/dashboard' : '/'}
+                    to={isAdmin ? '/admin' : '/'}
                     className={currentPage === 'home' ? 'active' : ''}
                   >
                     Home

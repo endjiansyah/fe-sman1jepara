@@ -58,7 +58,8 @@ function AdminBerita() {
 
     const[page, setPage] = useState({
         current : 1,
-        maxpage : 1
+        maxpage : 1,
+        total : 0
     })
     
     const[pagination,setPagination]=useState({
@@ -87,6 +88,7 @@ function AdminBerita() {
 
         const newCurrentPage = jsonData.page;
         const newMaxPage = jsonData.maxpage;
+        const newCount = jsonData.count;
 
         setPagination({
             back: newCurrentPage > 1,
@@ -96,6 +98,7 @@ function AdminBerita() {
         setPage({
             current: newCurrentPage,
             maxpage: newMaxPage,
+            total: newCount,
         });
 
         setData(jsonData.data);
@@ -327,7 +330,7 @@ function AdminBerita() {
                             </tbody>
                             }
                         </table>
-                        {!pageLoading && 
+                        {!pageLoading && page.total >10 && (
                         <div className="w-auto flex justify-center gap-2 mt-4 items-center">
 
                             <button onClick={backPage} className={pagination.back ? 'rounded-md px-6 py-2 bg-gray-300 hover:bg-gray-200': 'bg-gray-200 rounded-md px-6 py-2'}  disabled={!pagination.back}>Back</button>
@@ -335,7 +338,7 @@ function AdminBerita() {
                             <button onClick={nextPage} className={pagination.next ? 'rounded-md px-6 py-2 bg-gray-300 hover:bg-gray-200': 'bg-gray-200 rounded-md px-6 py-2'}  disabled={!pagination.next}>Next</button>
 
                         </div>
-                        }
+                        )}
 
                         {pageLoading && 
                         <div className="text-center mt-3">
@@ -367,6 +370,7 @@ function AdminBerita() {
                                 </label>
                                 <div className="mt-1 rounded-md shadow-sm">
                                 <Editor
+                                    className="w-full"
                                     apiKey={mcekey}
                                     onInit={(evt, editor) => editorRef.current = editor}
                                     value={formBerita.bodyform}
@@ -393,7 +397,7 @@ function AdminBerita() {
                                     Image
                                 </label>
                                 <div className="mt-1 rounded-md shadow-sm">
-                                    {/* <input value={formBerita.image} id="image" name="image" type="file" className="w-full px-3 py-2 border bg-white border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" /> */}
+
                                     <label htmlFor="image" className='bg-white px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 flex items-center gap-3'>
                                     <input
                                         onChange={handleChange}

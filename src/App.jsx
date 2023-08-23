@@ -7,6 +7,7 @@ import AdminBerita from './page/AdminBerita';
 import AdminPengumuman from './page/AdminPengumuman';
 import PageLogin from './page/PageLogin';
 import PageMain from './page/main'; 
+import AdminDashboard from './page/AdminDashboard';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<PageLogin/>} />
         <Route path="/berita" element={<PageBerita/>} />
         <Route path="/pengumuman" element={<PagePengumuman/>} />
+        <Route path="/admin" element={<AdminDashboard/>} />
         <Route path="/admin/berita" element={<AdminBerita/>} />
         <Route path="/admin/pengumuman" element={<AdminPengumuman/>} />
         <Route path="*" element={<Navigate to="/" />} />

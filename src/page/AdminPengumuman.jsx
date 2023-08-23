@@ -57,7 +57,8 @@ function AdminPengumuman() {
 
     const[page, setPage] = useState({
         current : 1,
-        maxpage : 1
+        maxpage : 1,
+        total : 0,
     })
     
     const[pagination,setPagination]=useState({
@@ -87,6 +88,7 @@ function AdminPengumuman() {
 
         const newCurrentPage = jsonData.page;
         const newMaxPage = jsonData.maxpage;
+        const newCount = jsonData.count;
 
         setPagination({
             back: newCurrentPage > 1,
@@ -96,6 +98,7 @@ function AdminPengumuman() {
         setPage({
             current: newCurrentPage,
             maxpage: newMaxPage,
+            total: newCount,
         });
 
         setData(jsonData.data);
@@ -312,15 +315,15 @@ function AdminPengumuman() {
                             </tbody>
                             }
                         </table>
-                        {!pageLoading && 
-                        <div className="w-auto flex justify-center gap-2 mt-4 items-center">
+                        {!pageLoading && page.total >10 && (
+                            <div className="w-auto flex justify-center gap-2 mt-4 items-center">
 
-                            <button onClick={backPage} className={pagination.back ? 'rounded-md px-6 py-2 bg-gray-300 hover:bg-gray-200': 'bg-gray-200 rounded-md px-6 py-2'}  disabled={!pagination.back}>Back</button>
-                            <h3>Page {page.current}</h3>
-                            <button onClick={nextPage} className={pagination.next ? 'rounded-md px-6 py-2 bg-gray-300 hover:bg-gray-200': 'bg-gray-200 rounded-md px-6 py-2'}  disabled={!pagination.next}>Next</button>
+                                <button onClick={backPage} className={pagination.back ? 'rounded-md px-6 py-2 bg-gray-300 hover:bg-gray-200': 'bg-gray-200 rounded-md px-6 py-2'}  disabled={!pagination.back}>Back</button>
+                                <h3>Page {page.current}</h3>
+                                <button onClick={nextPage} className={pagination.next ? 'rounded-md px-6 py-2 bg-gray-300 hover:bg-gray-200': 'bg-gray-200 rounded-md px-6 py-2'}  disabled={!pagination.next}>Next</button>
 
-                        </div>
-                        }
+                            </div>
+                        )}
 
                         {pageLoading && 
                         <div className="text-center mt-3">
@@ -331,7 +334,7 @@ function AdminPengumuman() {
 
                     <div className="w-full lg:w-1/2">
 
-                        <div className={mode.form == 'create' ? 'bg-blue-100 flex flex-col gap-2 shadow p-3' : 'bg-yellow-100/70 flex flex-col gap-2 shadow p-3'}>
+                        <div className={`${mode.form == 'create' ? 'bg-blue-100' : 'bg-yellow-100/70'} flex flex-col gap-2 shadow p-3`}>
                             <div className="flex justify-between">
                                 <h2 className="font-bold">{mode.form == 'create'? 'buat pengumuman' : 'Edit pengumuman'}</h2>
                                 <button onClick={modeCreate} className={mode.form == 'create' ? 'hidden' : 'px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-500'}>Batal Edit</button>
@@ -352,6 +355,7 @@ function AdminPengumuman() {
                                 </label>
                                 <div className="mt-1 rounded-md shadow-sm">
                                 <Editor
+                                    className="w-full"
                                     apiKey={mcekey}
                                     onInit={(evt, editor) => editorRef.current = editor}
                                     value={formPengumuman.bodyform}
